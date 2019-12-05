@@ -40,7 +40,14 @@ let user_signup = async(req, res) => {
 }
 
 let user_login = async(req, res) => {
+    if (req.body.userName === null || req.body.userName === undefined &&
+        req.body.password === null || req.body.password === undefined) {
+        return res.status(401).json({
+            message: "Please file username and password"
+        });
+    }
     let userData = req.body;
+
 
     let user = await User.findOne({
         $and: [
