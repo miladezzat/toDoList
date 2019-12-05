@@ -902,7 +902,7 @@ let ProfileComponent = class ProfileComponent {
         this.task = {};
         this.item = {};
         this.userData = {};
-        this.host = "http://localhost:3000";
+        this.host = "https://milad-to-do-list.herokuapp.com";
         let retrivedUserData = localStorage.getItem('userData');
         this.userData = JSON.parse(retrivedUserData);
     }
