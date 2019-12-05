@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const path = require('path')
 const cors = require('cors')
 
 require('./config/db.conf')
@@ -17,7 +17,7 @@ const app = express();
 app.use(cors());
 // app.use(morgan('dev'));
 
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +42,11 @@ app.use((req, res, next) => {
     // Pass to next layer of middleware
     next();
 })
+
+
+// app.get('/', (req, res) => {
+//     res.redirect('/');
+// });
 
 
 app.use('/', userPublickRouter);
