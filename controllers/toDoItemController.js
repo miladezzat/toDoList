@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Item = require('../models/toDoItemModel');
 
 let addTask = async(req, res) => {
     if (req.body === null || req.body === undefined) {
@@ -30,7 +31,7 @@ let addTask = async(req, res) => {
         });
 
     } catch (error) {
-        res.json({
+        res.status(401).json({
             error: error.errors
         });
     }
@@ -49,6 +50,11 @@ let allTasks = async(req, res) => {
 }
 
 let removeTask = async(req, res) => {
+    if (req.body === null || req.body === undefined) {
+        return res.status(401).json({
+            message: "Sorry Something error"
+        });
+    }
     try {
         let deletedItem = await Item.findOneAndUpdate({
             $and: [
@@ -63,7 +69,7 @@ let removeTask = async(req, res) => {
         });
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Error"
+            message: error
         });
     }
 }

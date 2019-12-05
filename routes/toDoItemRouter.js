@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const { user_logged } = require("../middleware/auth");
-const Item = require('../models/toDoItemModel');
 const { addTask, allTasks, removeTask } = require('../controllers/toDoItemController');
 
 
