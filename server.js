@@ -5,7 +5,7 @@ const cors = require('cors')
 
 require('./config/db.conf')
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 const userPublickRouter = require('./routes/userPublickRouter');
@@ -44,10 +44,9 @@ app.use((req, res, next) => {
 })
 
 
-// app.get('/', (req, res) => {
-//     res.redirect('/');
-// });
-
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
 
 app.use('/', userPublickRouter);
 //todoitem
