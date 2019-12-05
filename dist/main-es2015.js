@@ -600,9 +600,9 @@ let AuthService = class AuthService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._registerUrl = 'http://localhost:3000/register';
-        this._loginUrl = 'http://localhost:3000/login';
-        this._taskUrl = 'http://localhost:3000/todoitem';
+        this._registerUrl = 'https://milad-to-do-list.herokuapp.com/register';
+        this._loginUrl = 'https://milad-to-do-list.herokuapp.com/login';
+        this._taskUrl = 'https://milad-to-do-list.herokuapp.com/todoitem';
     }
     registerUser(user) {
         return this.http.post(this._registerUrl, user);
