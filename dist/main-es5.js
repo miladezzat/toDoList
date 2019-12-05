@@ -608,9 +608,9 @@
                 function AuthService(http, _router) {
                     this.http = http;
                     this._router = _router;
-                    this._registerUrl = 'https://milad-to-do-list.herokuapp.com/register';
-                    this._loginUrl = 'https://milad-to-do-list.herokuapp.com/login';
-                    this._taskUrl = 'https://milad-to-do-list.herokuapp.com/todoitem';
+                    this._registerUrl = 'https://mialdtodoapp.herokuapp.com/register';
+                    this._loginUrl = 'https://mialdtodoapp.herokuapp.com/login';
+                    this._taskUrl = 'https://mialdtodoapp.herokuapp.com/todoitem';
                 }
                 AuthService.prototype.registerUser = function (user) {
                     return this.http.post(this._registerUrl, user);
@@ -873,7 +873,7 @@
                     this.task = {};
                     this.item = {};
                     this.userData = {};
-                    this.host = "https://milad-to-do-list.herokuapp.com";
+                    this.host = "https://mialdtodoapp.herokuapp.com";
                     var retrivedUserData = localStorage.getItem('userData');
                     this.userData = JSON.parse(retrivedUserData);
                 }

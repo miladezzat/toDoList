@@ -600,9 +600,9 @@ let AuthService = class AuthService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._registerUrl = 'https://milad-to-do-list.herokuapp.com/register';
-        this._loginUrl = 'https://milad-to-do-list.herokuapp.com/login';
-        this._taskUrl = 'https://milad-to-do-list.herokuapp.com/todoitem';
+        this._registerUrl = 'https://mialdtodoapp.herokuapp.com/register';
+        this._loginUrl = 'https://mialdtodoapp.herokuapp.com/login';
+        this._taskUrl = 'https://mialdtodoapp.herokuapp.com/todoitem';
     }
     registerUser(user) {
         return this.http.post(this._registerUrl, user);
@@ -902,7 +902,7 @@ let ProfileComponent = class ProfileComponent {
         this.task = {};
         this.item = {};
         this.userData = {};
-        this.host = "https://milad-to-do-list.herokuapp.com";
+        this.host = "https://mialdtodoapp.herokuapp.com";
         let retrivedUserData = localStorage.getItem('userData');
         this.userData = JSON.parse(retrivedUserData);
     }
