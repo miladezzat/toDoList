@@ -968,8 +968,8 @@
                     this._auth.registerUser(this.registerUserData)
                         .subscribe(function (res) {
                         var userData = {
-                            photo: res.loggedUser.avatar,
-                            fullName: res.loggedUser.fullName
+                            photo: res.registeredUser.avatar,
+                            fullName: res.registeredUser.fullName
                         };
                         localStorage.removeItem('userData');
                         localStorage.setItem('userData', JSON.stringify(userData));
