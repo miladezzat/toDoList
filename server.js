@@ -17,7 +17,7 @@ const app = express();
 app.use(cors());
 // app.use(morgan('dev'));
 
-app.use('/', express.static('dist'));
+app.use(express.static('dist'));
 app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
