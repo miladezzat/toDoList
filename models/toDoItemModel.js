@@ -13,6 +13,25 @@ const todoItemSchema = new Schema({
         type: String,
         required: [true, 'content of item required']
     },
+    start: {
+        type: Boolean,
+        default: false
+    },
+    end: {
+        type: Boolean,
+        default: false
+    },
+    startTime: {
+        type: Date
+    },
+    endTime: {
+        type: Date,
+    },
+    duration: {
+        type: Date,
+        default: this.endTime - this.startTime
+
+    },
     isDeleted: {
         type: Boolean,
         default: false

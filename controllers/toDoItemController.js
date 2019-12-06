@@ -37,6 +37,8 @@ let addTask = async(req, res) => {
     }
 }
 let allTasks = async(req, res) => {
+    console.log("Here");
+
     try {
         let allTodoItems = await Item.find({ userId: req.userId, isDeleted: false })
             .select("-__v -isDeleted")
