@@ -95,20 +95,19 @@ let startTask = (req, res) => {
                 { isDeleted: false },
                 { start: false }
             ]
-        }, { $set: { start: true, startTime: startTime } })
-        .then(result => {
+        }, { $set: { start: true, startTime: startTime } }, { new: true }, (err, result) => {
             if (!result) {
                 return res.status(401).json({
                     message: "This Task already Started"
                 });
             }
             res.status(200).json(result);
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: err
-            });
-        })
+        }).select("-isDeleted -__v -userId")
+        // .select("isDeleted")
+        // .then(result => {
+
+
+    // })
 }
 
 let endTask = async(req, res) => {
@@ -130,7 +129,7 @@ let endTask = async(req, res) => {
     let duration = prettyMs(diff, { verbose: true })
 
 
-    let endedTask = await Item.findOneAndUpdate({
+    Item.findOneAndUpdate({
         $and: [
             { _id: itemId },
             { userId: req.userId },
@@ -139,14 +138,15 @@ let endTask = async(req, res) => {
         ]
     }, {
         $set: { end: true, endTime: endTime, duration: duration }
+    }, { new: true }, (err, doc) => {
+        if (!doc) {
+            return res.status(401).json({
+                message: "This Task already Ended"
+            });
+        }
+        res.json(doc);
     })
-    if (!endedTask) {
-        return res.status(401).json({
-            message: "This Task already Ended"
-        });
-    }
 
-    res.json(endedTask);
 }
 
 
