@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container mt-2 mt-md-5\">\n    <div class=\"row\">\n        <div class=\"col-12 col-md-8 offset-md-2\">\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body text-center\" *ngIf=\"userData\">\n                    <img src=\"{{host}}{{userData.photo}}\" class=\"rounded shadow-lg\" alt=\"Fucking\">\n                    <p>{{userData.fullName}}</p>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"row mt-5\">\n        <div class=\"col-12 col-md-8 offset-md-2\">\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body\">\n                    <form>\n                        <div class=\"form-group\">\n                            <label for=\"content\">Task</label>\n                            <input [(ngModel)]=\"task.content\" type=\"test\" name=\"content\" required class=\"form-control\" id=\"content\" placeholder=\"Add task\">\n                            <p class=\"lead text-danger\" *ngIf=\"addTaskError\">\n                                * {{addTaskError}}\n                            </p>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-outline-primary btn-block\" (click)=\"addTask();\">Add Task</button>\n                        <span class=\"text-success\" *ngIf=\"taskDeleted\">{{taskDeleted}}</span>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row mt-5 mb-3\" *ngIf=\"tasks.length > 0\">\n        <div class=\"col-12 col-md-10 offset-md-1\">\n            <h1 class=\"text-center text-success\">All Tasks</h1>\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body\">\n                    <p class=\"pt-1 pl-2 pb-1 pr-2 lead shadow-lg bg-secondary text-white\" *ngFor=\"let task of tasks\">\n                        {{task.content}}\n                        <button class=\"btn btn-danger d-md-inline float-right\" (click)=\"removeTask($event,task)\"> Delete </button>\n\n                        <span>Start Task in : {{task.dateOfcreated}}</span>\n                    </p>\n                </div>\n            </div>\n        </div>\n    </div>\n\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container mt-2 mt-md-5\">\n    <div class=\"row\">\n        <div class=\"col-12 col-md-8 offset-md-2\">\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body text-center\" *ngIf=\"userData\">\n                    <img src=\"{{host}}{{userData.photo}}\" class=\"rounded shadow-lg\" alt=\"avatar\">\n                    <p>{{userData.fullName}}</p>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"row mt-5\">\n        <div class=\"col-12 col-md-8 offset-md-2\">\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body\">\n                    <form>\n                        <div class=\"form-group\">\n                            <label for=\"content\">Task</label>\n                            <input [(ngModel)]=\"task.content\" type=\"test\" name=\"content\" required class=\"form-control\" id=\"content\" placeholder=\"Add task\">\n                            <p class=\"lead text-danger\" *ngIf=\"addTaskError\">\n                                * {{addTaskError}}\n                            </p>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-outline-primary btn-block\" (click)=\"addTask();\">Add Task</button>\n                        <span class=\"text-success\" *ngIf=\"taskDeleted\">{{taskDeleted}}</span>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row mt-5 mb-3\" *ngIf=\"tasks.length > 0\">\n        <div class=\"col-12 col-md-10 offset-md-1\">\n            <h1 class=\"text-center text-success\">All Tasks</h1>\n            <div class=\"card bg-light shadow-lg rounded\">\n                <div class=\"card-body clearfix\">\n                    <div class=\"shadow-lg bg-secondary p-1 mt-1 mb-1 clearfix\" *ngFor=\"let task of tasks\">\n                        <p class=\"text-center text-white clearfix\">\n                            <span class=\"float-md-left d-block d-md-inline\" *ngIf=\"task.start\">Tast started from :{{task.startTime}}</span>\n                            <span class=\"float-md-right d-block d-md-inline\" *ngIf=\"task.end\">Task ended in : {{task.endTime}} </span>\n                        </p>\n                        <p class=\"lead text-white clearfix\">\n                            <span class=\"task-content p-2 shadow-lg\">{{task.content}}</span>\n                            <button class=\"btn btn-danger d-md-inline float-right\" (click)=\"removeTask($event,task)\"> X </button>\n                        </p>\n                        <p class=\"text-center text-white clearfix\">\n                            <button *ngIf=\"!task.start\" (click)=\"startTask(task)\" class=\"btn btn-primary float-left\">start</button>\n                            <span *ngIf=\"task.start && !task.end\" class=\"text-warning\">Ongoing ... </span>\n                            <span *ngIf=\"!task.start && !task.end\" class=\"text-warning\">Not Started</span>\n                            <span *ngIf=\"task.end\" class=\"d-block\">Ended</span>\n                            <span *ngIf=\"task.end\" class=\"d-block text-light\">Duration [ {{task.duration}} ]</span>\n                            <button *ngIf=\"!task.end\" (click)=\"endTask(task)\" class=\"btn btn-success float-right\">End</button>\n                        </p>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n</div>");
 
 /***/ }),
 
@@ -597,6 +597,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AuthService = class AuthService {
+    // private _registerUrl = 'http://localhost:3000/register';
+    // private _loginUrl = 'http://localhost:3000/login';
+    // private  _taskUrl  = 'http://localhost:3000/todoitem';
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
@@ -636,6 +639,20 @@ let AuthService = class AuthService {
             }
         };
         return this.http.delete(this._taskUrl, options);
+    }
+    startTask(task) {
+        console.log(task);
+        const body = {
+            itemId: task._id
+        };
+        return this.http.put(this._taskUrl + '/start', body);
+    }
+    endTask(task) {
+        console.log(task);
+        const body = {
+            itemId: task._id
+        };
+        return this.http.put(this._taskUrl + '/end', body);
     }
 };
 AuthService.ctorParameters = () => [
@@ -870,7 +887,7 @@ PageNodeFouncdComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("span {\n    font-size: 12px;\n    display: block\n}\n\nimg {\n    height: 50px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxlQUFlO0lBQ2Y7QUFDSjs7QUFFQTtJQUNJLFlBQVk7QUFDaEIiLCJmaWxlIjoic3JjL2FwcC9wcm9maWxlL3Byb2ZpbGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInNwYW4ge1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBkaXNwbGF5OiBibG9ja1xufVxuXG5pbWcge1xuICAgIGhlaWdodDogNTBweDtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("img {\n    height: 50px;\n}\n\n.task-content {\n    background-color: #218838;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxZQUFZO0FBQ2hCOztBQUVBO0lBQ0kseUJBQXlCO0FBQzdCIiwiZmlsZSI6InNyYy9hcHAvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpbWcge1xuICAgIGhlaWdodDogNTBweDtcbn1cblxuLnRhc2stY29udGVudCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzIxODgzODtcbn0iXX0= */");
 
 /***/ }),
 
@@ -895,6 +912,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ProfileComponent = class ProfileComponent {
+    // host= "http://localhost:3000";
     constructor(_auth, _router) {
         this._auth = _auth;
         this._router = _router;
@@ -902,6 +920,7 @@ let ProfileComponent = class ProfileComponent {
         this.task = {};
         this.item = {};
         this.userData = {};
+        this.start = false;
         this.host = "https://mialdtodoapp.herokuapp.com";
         let retrivedUserData = localStorage.getItem('userData');
         this.userData = JSON.parse(retrivedUserData);
@@ -911,6 +930,7 @@ let ProfileComponent = class ProfileComponent {
             .subscribe(res => {
             this.tasks = res;
         }, err => {
+            console.log(err);
             if (err instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpErrorResponse"]) {
                 if (err.status === 401) {
                     this._router.navigate(['/login']);
@@ -940,6 +960,38 @@ let ProfileComponent = class ProfileComponent {
         }, err => {
             this.taskDeleted = err.message;
             this.addTaskError = err.error.message;
+        });
+    }
+    startTask(task) {
+        this._auth.startTask(task)
+            .subscribe(res => {
+            // console.log(res);
+            let mapped = this.tasks.map(el => {
+                if (task._id == el._id) {
+                    return res;
+                }
+                return el;
+            });
+            this.tasks = mapped;
+            console.log(mapped);
+        }, err => {
+            console.log(err);
+        });
+    }
+    endTask(task) {
+        this._auth.endTask(task)
+            .subscribe(res => {
+            // console.log(res);
+            let mapped = this.tasks.map(el => {
+                if (task._id == el._id) {
+                    return res;
+                }
+                return el;
+            });
+            this.tasks = mapped;
+            console.log(mapped);
+        }, err => {
+            console.log(err);
         });
     }
 };
