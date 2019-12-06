@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const mongoose = require('mongoose')
 const secretKey = 'tokenSecretKey';
 
-var responseUserData = (user) => {
+var responseUserData = async(user) => {
     let userDataForToken = {
         userId: user._id
     }
