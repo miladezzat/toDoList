@@ -41,13 +41,14 @@ let user_signup = async(req, res) => {
             });
         }
 
-        let userSaved = await newUser.save();
+        res.send(existUser);
+        // let userSaved = await newUser.save();
 
-        let registeredUser = await responseUserData(userSaved)
+        // let registeredUser = await responseUserData(userSaved)
 
-        res.status(200).json({
-            registeredUser
-        });
+        // res.status(200).json({
+        //     registeredUser
+        // });
 
     } catch (error) {
         res.status(400).json({
