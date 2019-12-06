@@ -6,7 +6,7 @@ const todoItemSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     userId: {
         type: mongoose.Types.ObjectId,
-        ref: "user",
+        ref: "todouser",
         required: [true, "userId required"]
     },
     content: {
