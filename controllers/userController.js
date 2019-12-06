@@ -42,8 +42,8 @@ let user_signup = async(req, res) => {
         }
 
 
-        let userSaved = await newUser.save();
-        res.send(userSaved);
+        // let userSaved = await newUser.save();
+        res.send(newUser);
         // let registeredUser = await responseUserData(userSaved)
 
         // res.status(200).json({
