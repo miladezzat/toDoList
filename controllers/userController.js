@@ -3,6 +3,21 @@ const User = require('../models/userModel');
 const mongoose = require('mongoose')
 const secretKey = 'tokenSecretKey';
 
+var responseUserData = (user) => {
+    let userDataForToken = {
+        userId: user._id
+    }
+    let token = jwt.sign(userDataForToken, secretKey);
+    let userDataSent = {
+        token: token,
+        avatar: user.avatar,
+        _id: user._id,
+        fullName: user.fullName,
+        userName: user.userName,
+    }
+    return userDataSent;
+}
+
 let user_signup = async(req, res) => {
     try {
         let userData = req.body;
@@ -27,7 +42,9 @@ let user_signup = async(req, res) => {
         }
 
         let userSaved = await newUser.save();
+
         let registeredUser = await responseUserData(userSaved)
+
         res.status(200).json({
             registeredUser
         });
@@ -70,21 +87,6 @@ let user_login = async(req, res) => {
             loggedUser
         });
     }
-}
-
-let responseUserData = (user) => {
-    let userDataForToken = {
-        userId: user._id
-    }
-    let token = jwt.sign(userDataForToken, secretKey);
-    let userDataSent = {
-        token: token,
-        avatar: user.avatar,
-        _id: user._id,
-        fullName: user.fullName,
-        userName: user.userName,
-    }
-    return userDataSent;
 }
 
 module.exports = {
