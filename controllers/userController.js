@@ -41,9 +41,9 @@ let user_signup = async(req, res) => {
             });
         }
 
-        res.send(existUser);
-        // let userSaved = await newUser.save();
 
+        let userSaved = await newUser.save();
+        res.send(userSaved);
         // let registeredUser = await responseUserData(userSaved)
 
         // res.status(200).json({
@@ -52,6 +52,7 @@ let user_signup = async(req, res) => {
 
     } catch (error) {
         res.status(400).json({
+            message: "Something Error",
             error: error.errors
         });
     }
