@@ -41,7 +41,7 @@ let user_signup = async(req, res) => {
             });
         }
 
-        res.send("Nothing");
+        res.send(newUser);
         // let userSaved = await newUser.save();
         // res.send(newUser);
         // let registeredUser = await responseUserData(userSaved)
