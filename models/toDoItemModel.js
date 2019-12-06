@@ -22,15 +22,13 @@ const todoItemSchema = new Schema({
         default: false
     },
     startTime: {
-        type: Date
+        type: String
     },
     endTime: {
-        type: Date,
+        type: String,
     },
     duration: {
-        type: Date,
-        default: this.endTime - this.startTime
-
+        type: String,
     },
     isDeleted: {
         type: Boolean,
